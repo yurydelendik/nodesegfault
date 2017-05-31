@@ -34,6 +34,20 @@ return new Promise(function (resolve, reject) {
 });
 }
 
+// Fix via sync's
+function writeToFileSync(svgdump, pageNum) {
+  var name = getFileNameFromPath(pdfPath);
+  if (!fs.existsSync('./svgdump/')) {
+    fs.mkdirSync('./svgdump/');
+  }
+  try {
+    fs.writeFileSync('./svgdump/' + name + '-' + pageNum + '.svg', svgdump, 'utf-8');
+    console.log('Page: ' + pageNum);
+  } catch(err) {
+    console.log('Error: ' + err);
+  }
+}
+
 // Get filename from the path
 
 function getFileNameFromPath(path) {
@@ -67,6 +81,7 @@ pdfjsLib.getDocument({
         svgGfx.embedFonts = true;
         return svgGfx.getSVG(opList, viewport).then(function (svg) {
           var svgDump = svg.toString();
+//          return writeToFileSync(svgDump, pageNum);
           return writeToFile(svgDump, pageNum);
         });
       });
