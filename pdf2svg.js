@@ -5,6 +5,9 @@
 // Node tool to dump SVG output into a file.
 //
 
+// Node.js promises implemenation cause OOM, using PDF.js one
+// global.Promise = undefined;
+
 var fs = require('fs');
 require('./domstubs.js');
 var pdfjsLib = require('pdfjs-dist');
